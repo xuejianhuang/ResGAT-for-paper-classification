@@ -30,7 +30,7 @@
   * pre_data:数据预处理和统计分析代码
   * results:GNN模型实验结果保存目录
   * confusin.py:可视化混合矩阵
-  * GAT.py:GAT模型实现类
+  * GAT.py:GAT及其改进模型实现类，通过参数可以配置多头注意力个数和残差结构
   * GCN.py:GCN模型实现类
   * main.py:项目主文件
   * SAGE.py：GraphSAGE模型实现类
@@ -45,4 +45,4 @@
    * pytorch=1.9.1
    * visdom=0.1.8.9
 # 实验结果
-  GAT模型的准确率最高，达到了61%。
+  基于多头注意力机制和残差连接改进的GAT模型的准确率最高，达到了61%。
