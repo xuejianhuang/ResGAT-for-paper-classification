@@ -38,3 +38,4 @@ early_stop_cnt=20      #验证集准确率不提升时最多等待epoch，早停
 batch_size=2048       #批量训练样本数
 device = "cpu" # torch.device("cuda:0" if torch.cuda.is_available() else "cpu")   #为了并行训练，把这baseline模型使用cpu
 num_worker=16
+
