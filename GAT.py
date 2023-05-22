@@ -15,7 +15,7 @@ class GraphAttnModel(nn.Module):
         :param hidden_dim: GAT隐含层维度
         :param n_layers:采用层数
         :param fanouts 每层最大采样邻居数量
-        :param n_classes:分类类别数
+        :param n_classes:分类类别数 
         :param num_heads:注意力个数
         :param feat_dropout:特征dropout比例
         :param attn_dropout:attention dropout比例
