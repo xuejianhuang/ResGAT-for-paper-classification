@@ -5,7 +5,7 @@ import dgl.nn as dglnn
 import config as config
 
 
-class GraphAttnModel(nn.Module):
+class ResGATModel(nn.Module):
 
     def __init__(self, in_feats, hidden_dim, n_layers,fanouts, n_classes, num_heads, feat_dropout, attn_dropout,
                  dnn_unit_dropout,save_path=config.gat_model_path,loss_path=config.gat_loss_path,acc_path=config.gat_acc_path,
@@ -27,7 +27,7 @@ class GraphAttnModel(nn.Module):
         :param residual:是否使用残差网络结构,defaut=True
         :param activation:激活函数 default=relu
         '''
-        super(GraphAttnModel, self).__init__()
+        super(ResGATModel, self).__init__()
         self.in_feats = in_feats
         self.hidden_dim = hidden_dim
         self.n_layers = n_layers
