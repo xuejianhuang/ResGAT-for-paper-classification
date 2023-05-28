@@ -1,7 +1,6 @@
 import  baseline.baseline_config as config
 from torch import nn
 
-
 class DNN(nn.Module):
     def __init__(self,input_size,output_size,dnn_unit_dropout,save_path=config.DNN_model_path,
                  loss_path=config.DNN_loss_path, acc_path=config.DNN_acc_path):
