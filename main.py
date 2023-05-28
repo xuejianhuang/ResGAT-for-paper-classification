@@ -28,8 +28,8 @@ def train(epoch, model, loss_fn, optimizer, train_dataloader, node_feat, labels,
     train_total_loss = 0  #
     train_total_correct = 0
     train_total_num = 0
-    for step, (input_nodes, seeds, blocks) in enumerate (train_dataloader):  # input_nodes:参与计算的所有节点id,seeds:输出节点id
-        global total_step  # 使用全局的total_step
+    for step, (input_nodes, seeds, blocks) in enumerate (train_dataloader):  # input_nodes:all node ids participating in the calculation,seeds:output node id
+        global total_step  # Use the global total_step
         total_step += 1
 
         # forward
@@ -41,13 +41,13 @@ def train(epoch, model, loss_fn, optimizer, train_dataloader, node_feat, labels,
 
         # print("train:",th.sum(train_batch_logits,axis=1).shape,th.sum(train_batch_logits,axis=1))
 
-        train_loss = loss_fn (train_batch_logits, batch_labels)  # pytorch自动会把labels数字转化为one-hot
+        train_loss = loss_fn (train_batch_logits, batch_labels)  # pytorch automatically converts labels into one-hot
         # backward
         optimizer.zero_grad ()
         train_loss.backward ()
         optimizer.step ()
 
-        train_total_loss += train_loss.cpu ().detach ().numpy ()*seeds.shape[0]  # 平均loss*bath_size
+        train_total_loss += train_loss.cpu ().detach ().numpy ()*seeds.shape[0]  #  average loss*bath_size
 
         preds = th.argmax (train_batch_logits, dim=1)
         train_total_correct += th.eq (preds, batch_labels).float ().sum ().item ()
@@ -60,7 +60,7 @@ def train(epoch, model, loss_fn, optimizer, train_dataloader, node_feat, labels,
 
     print ('In epoch:{:03d}, train_loss:{:4f}, train_acc:{:.4f}'.format (epoch, mean_train_loss, mean__train_acc))
 
-    # 动态可视化训练过程中loss和accuracy的变化
+    # Visualize changes in loss and accuracy
     vis.append ([mean_train_loss], [epoch], name='train_loss', win='main_loss')
     vis.append ([mean__train_acc], [epoch], name='train_acc', win='main_acc')
     return mean_train_loss, mean__train_acc
@@ -69,7 +69,7 @@ def train(epoch, model, loss_fn, optimizer, train_dataloader, node_feat, labels,
 def test(epoch, model, loss_fn, test_dataloader, node_feat, labels,vis):
     # mini-batch for test
     model.eval ()
-    confusin = th.zeros (config.n_classes, config.n_classes)  # 建立混合矩阵进行误差分析
+    confusin = th.zeros (config.n_classes, config.n_classes)  # Create a confusion matrix for error analysis
     test_total_loss = 0
     test_total_correct = 0
     test_total_num = 0
@@ -82,7 +82,7 @@ def test(epoch, model, loss_fn, test_dataloader, node_feat, labels,vis):
             test_batch_logits = model (blocks, batch_inputs)
             test_loss = loss_fn (test_batch_logits, batch_labels)
 
-            test_total_loss += test_loss.cpu ().numpy ()*seeds.shape[0]  # 平均loss*bath_size
+            test_total_loss += test_loss.cpu ().numpy ()*seeds.shape[0]  # average loss*bath_size
             preds = th.argmax (test_batch_logits, dim=1)
 
             for i in range (len (preds)):
@@ -95,7 +95,7 @@ def test(epoch, model, loss_fn, test_dataloader, node_feat, labels,vis):
         mean_test_loss = test_total_loss / test_total_num
         print ('In epoch:{:03d}, test_loss:{:4f},test_acc:{:.4f}'.format (epoch, mean_test_loss, mean_test_acc))
 
-        # 动态可视化训练过程中loss和accuracy的变化
+        # Visualize changes in loss and accuracy
         vis.append ([mean_test_loss], [epoch], name='test_loss', win='main_loss')
         vis.append ([mean_test_acc], [epoch], name='test_acc', win='main_acc')
         return mean_test_loss, mean_test_acc, confusin
@@ -104,7 +104,7 @@ def test(epoch, model, loss_fn, test_dataloader, node_feat, labels,vis):
 def main(model):
     vis = Visualize (server=config.server, host=config.port, wins=['main_loss', 'main_acc', 'main_step_loss'])
     graph, labels, train_nid, test_nid, node_feat = load_dgl_graph (config.base_path)
-    graph = dgl.to_bidirected (graph, copy_ndata=True)  # 转化为双向图
+    graph = dgl.to_bidirected (graph, copy_ndata=True)  # Convert to bidirectional graph
     # graph = dgl.add_self_loop(graph)
     graph_data = (graph, labels, train_nid, test_nid, node_feat)
 
@@ -116,7 +116,7 @@ def main(model):
     test_dataloader = NodeDataLoader (graph, test_nid, sampler, batch_size=config.batch_size, shuffle=False,
                                       num_workers=config.num_worker)
     model.to (config.device)
-    # 计算模型参数量
+    # Calculate the amount of model parameters
     count_parameters = sum (p.numel () for p in model.parameters () if p.requires_grad)
     print (f"The model has {count_parameters:,} trainable parameters")
 
@@ -130,11 +130,11 @@ def main(model):
     train_acc_list=[]
     start_epoch=0
     if config.resume:
-        path_checkpoint =config.checkpoint_path  # 断点路径
-        checkpoint = th.load (path_checkpoint)  # 加载断点
-        model.load_state_dict (checkpoint['net'])  # 加载模型可学习参数
-        optimizer.load_state_dict (checkpoint['optimizer'])  # 加载优化器参数
-        start_epoch = checkpoint['epoch']  # 设置开始的epoch
+        path_checkpoint =config.checkpoint_path  # checkkpoint path
+        checkpoint = th.load (path_checkpoint)  # checkkpoint load
+        model.load_state_dict (checkpoint['net'])  # model load
+        optimizer.load_state_dict (checkpoint['optimizer'])  # load optimizer
+        start_epoch = checkpoint['epoch']  # Set the start epoch
     for epoch in range (start_epoch,config.epochs):
         t_start = time.time ()
         train_loss, train_acc = train (epoch, model, loss_fn, optimizer, train_dataloader, node_feat, labels,vis)
