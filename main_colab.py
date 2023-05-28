@@ -8,7 +8,7 @@ import dgl
 from dgl.dataloading.neighbor import MultiLayerNeighborSampler
 from dgl.dataloading.pytorch import NodeDataLoader
 
-from GAT import GraphAttnModel
+from ResGAT import ResGATModel
 from GCN import GraphConvModel
 from SAGE import GraphSageModel
 from utils import load_dgl_graph, time_diff, load_subtensor, saveConfusin,save_model,save_checkpoint
@@ -166,7 +166,7 @@ def main(model):
 if __name__ == '__main__':
 
     #-----------GAT---------------
-    model_gat = GraphAttnModel (in_feats=config.in_feats, hidden_dim=config.GAT_hidden_dim, n_layers=config.GAT_layers,
+    model_resgat = ResGATModel (in_feats=config.in_feats, hidden_dim=config.GAT_hidden_dim, n_layers=config.GAT_layers,
                             fanouts=config.GAT_fanouts,n_classes=config.n_classes, num_heads=config.GAT_atte_num_heads,
                             feat_dropout=config.GAT_f_dropout,attn_dropout=config.GAT_atte_dropout,dnn_unit_dropout=config.DNN_dropout)
 
