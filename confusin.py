@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import config
 
-
 def viewConfusin(confusin_df):
 
     lows=confusin_df.shape[0]
