@@ -27,6 +27,7 @@ def svm_model(is_pac=False,n=0.9):
     print("准确率是:{}, 消耗时间是:{}s".format(accuracy, int(end - start)))
     return accuracy
 
+
 if __name__ == '__main__':
     svm_model(is_pac=False)
 
