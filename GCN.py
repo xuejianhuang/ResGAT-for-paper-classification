@@ -9,19 +9,19 @@ class GraphConvModel(nn.Module):
     def __init__(self,in_feats, hidden_dim, n_layers,fanouts, n_classes,h_dropout,dnn_unit_dropout,save_path=config.gcn_model_path,
                  loss_path=config.gcn_loss_path,acc_path=config.gcn_acc_path,confusion_path=config.gcn_confusion_path,norm='both',activation=F.relu):
         '''
-        :param in_feats: 输入特征维度
-        :param hidden_dim: GAT隐含层维度
-        :param n_layers:采用层数
-        :param fanouts 每层最大采样邻居数量
-        :param n_classes:分类类别数
-        :param h_dropout: 隐含层输出随机置零概率
-        :param dnn_unit_dropout:DNN dropout比例
-        :param save_path:模型保存路径
-        :param loss_path 训练loss保存路径
-        :param acc_path 训练acc保存路径
-        :param confusion_path 混合矩阵保存路径
-        :param norm: normalization参数
-        :param activation:激活函数 default=relu
+        :param in_feats: input feature dimension
+        :param hidden_dim: hidden layer dimension
+        :param n_layers:Sampling layers
+        :param fanouts the maximum number of sampled neighbor nodes per layer
+        :param n_classes:number of categories
+        :param h_dropout: hidden layer dropout rate
+        :param dnn_unit_dropout:DNN dropout rate
+        :param save_path:model storage path
+        :param loss_path: training loss save path
+        :param acc_path： training accuracy save path 
+        :param confusion_path: confusion matrix save path
+        :param norm: normalization parameter
+        :param activation:activation function default=relu
         '''
         super(GraphConvModel, self).__init__()
         self.in_feats = in_feats
