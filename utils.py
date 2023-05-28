@@ -16,7 +16,7 @@ import random
 
 def load_dgl_graph(base_path):
     """
-    读取预处理的Graph，Feature和Label文件，并构建相应的数据供训练代码使用。
+    Read preprocessed Graph, Feature and Label files, and build corresponding data for training
 
     :param base_path:
     :return:
@@ -71,7 +71,7 @@ def save_checkpoint(model,optimizer,epoch):
     th.save (checkpoint_new, config.checkpoint_path)
 def time_diff(t_end, t_start):
     """
-    计算时间差。t_end, t_start are datetime format, so use deltatime
+    Calculate time difference. t_end, t_start are datetime format, so use deltatime
     Parameters
     ----------
     t_end
