@@ -1,78 +1,78 @@
 import torch
 
-#图数据存储文件
+#Graph data store file
 base_path="./data"
 graph_file="graph_pre.bin"
 label_file='labels_pre.pkl'
 features_file="features_pre.npy"
 
-#断点保存设置
-resume=False  #是否从断点开始训练
-checkpoint_path='./checkpoint/ckpt.pth'  #断点保存路径
-checkpoint_epoch=5          #每隔训练多少epoch保存一次当前训练状态
+#Checkpoint save settings
+resume=False  #Whether to start training from a checkpoint
+checkpoint_path='./checkpoint/ckpt.pth'  #Checkpoint save path
+checkpoint_epoch=5          #Save the current training state every how many epochs
 
 
 
-#visdom配置
+#visdom configuration
 server='localhost'
 port=8097
 
 
 
-#GAT模型参数
-GAT_layers=3                #采样层数数
-GAT_fanouts=[10,10,10]       #每层最大采样邻居数量
-GAT_hidden_dim=256      #隐含层维度
-GAT_f_dropout=0.1      #特征随机置零概率
-GAT_atte_dropout=0.1     #注意力机制随机置零概率
-GAT_atte_num_heads=1      #多头注意力个数
-gat_model_path="./results/models/gat_"+str(GAT_layers)+"_"+str(GAT_atte_num_heads)+".pkl"  #模型存储路径
-gat_loss_path='./results/gat_'+str(GAT_layers)+"_"+str(GAT_atte_num_heads)+"_loss.csv"      #训练过程loss保存路径
-gat_acc_path='./results/gat_'+str(GAT_layers)+"_"+str(GAT_atte_num_heads)+"_acc.csv"    #训练过程acc保存路径
-gat_confusion_path='./results/gat_'+str(GAT_layers)+"_"+str(GAT_atte_num_heads)+'_confusin.csv'  #混合矩阵保存路径
+#GAT model parameters
+GAT_layers=3                #number of sampling layers
+GAT_fanouts=[10,10,10]       #the maximum number of sampled neighbor nodes per layer
+GAT_hidden_dim=256      #hidden layer dimension
+GAT_f_dropout=0.1      #feature dropout rate
+GAT_atte_dropout=0.1     #attention dropout rate
+GAT_atte_num_heads=1      #the number of multi-headed attention
+gat_model_path="./results/models/gat_"+str(GAT_layers)+"_"+str(GAT_atte_num_heads)+".pkl"  #model storage path
+gat_loss_path='./results/gat_'+str(GAT_layers)+"_"+str(GAT_atte_num_heads)+"_loss.csv"      #training loss save path
+gat_acc_path='./results/gat_'+str(GAT_layers)+"_"+str(GAT_atte_num_heads)+"_acc.csv"    #training accuracy save path
+gat_confusion_path='./results/gat_'+str(GAT_layers)+"_"+str(GAT_atte_num_heads)+'_confusin.csv'  #confusion matrix save path
 
-#GCN模型参数
-GCN_layers=3                #采样层数数
-GCN_fanouts=[10,10,10]       #每层最大采样邻居数量
-GCN_hidden_dim=256       #隐含层维度
-GCN_h_dropout=0.1       #最后隐含层输出随机置零概率
-gcn_model_path="./results/models/gcn_"+str(GCN_layers)+".pkl"  #模型存储位置
-gcn_loss_path='./results/gcn_'+str(GCN_layers)+"_loss.csv"      #训练过程loss保存路径
-gcn_acc_path='./results/gcn_'+str(GCN_layers)+"_acc.csv"    #训练过程acc保存路径
-gcn_confusion_path='./results/gcn_'+str(GCN_layers)+'_confusin.csv'  #混合矩阵保存路径
-
-
-#SAGE模型参数
-SAGE_layers=3                #采样层数数
-SAGE_fanouts=[10,10,10]       #每层最大采样邻居数量
-SAGE_hidden_dim=256      #隐含层维度
-SAGE_f_dropout=0.1        #特征随机置零概率
-sage_model_path="./results/models/sage_"+str(SAGE_layers)+".pkl"  #模型存储位置
-sage_loss_path='./results/sage_'+str(SAGE_layers)+"_loss.csv"      #训练过程loss保存路径
-sage_acc_path='./results/sage_'+str(SAGE_layers)+"_acc.csv"    #训练过程acc保存路径
-sage_confusion_path='./results/sage_'+str(SAGE_layers)+'_confusin.csv'  #混合矩阵保存路径
+#GCN model parameters
+GCN_layers=3                #Number of sampling layers
+GCN_fanouts=[10,10,10]       #The maximum number of sampled neighbor nodes per layer
+GCN_hidden_dim=256       #hidden layer dimension
+GCN_h_dropout=0.1       #Hidden layer dropout rate
+gcn_model_path="./results/models/gcn_"+str(GCN_layers)+".pkl"  #model storage path
+gcn_loss_path='./results/gcn_'+str(GCN_layers)+"_loss.csv"      #training loss save path
+gcn_acc_path='./results/gcn_'+str(GCN_layers)+"_acc.csv"    #training accuracy save path
+gcn_confusion_path='./results/gcn_'+str(GCN_layers)+'_confusin.csv'  #confusion matrix save path
 
 
+#SAGE model parameters
+SAGE_layers=3                #Number of sampling layers
+SAGE_fanouts=[10,10,10]       #The maximum number of sampled neighbor nodes per layer
+SAGE_hidden_dim=256      #hidden layer dimension
+SAGE_f_dropout=0.1        #feature dropout rate
+sage_model_path="./results/models/sage_"+str(SAGE_layers)+".pkl"  #model storage path
+sage_loss_path='./results/sage_'+str(SAGE_layers)+"_loss.csv"      #training loss save path
+sage_acc_path='./results/sage_'+str(SAGE_layers)+"_acc.csv"    #training accuracy save path
+sage_confusion_path='./results/sage_'+str(SAGE_layers)+'_confusin.csv'  #confusion matrix save path
 
 
-n_classes=23       #类别数
-in_feats=300       #输入特征维度
+
+
+n_classes=23       #number of categories
+in_feats=300       #input feature dimension
 
 label=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q', 'R', 'S', 'T', 'U', 'V', 'W']
 
 
-#全连接层参数
-DNN_layers=5         #全连接层数
-DNN_hidden_dim =[512,256,128,64,n_classes]  #全连接层隐含层维度
-DNN_dropout =0.1     #全连接层随机置零概率
+#fully connected layer parameters
+DNN_layers=5         #fully connected layers
+DNN_hidden_dim =[512,256,128,64,n_classes]  #hidden layer dimension
+DNN_dropout =0.1     #dropout rate
 
 
 
-#训练参数
-learning_rate=0.001    #学习率
-weight_decay=0     #L2正则化参数
-epochs=100            #最大迭代次数
-early_stop_cnt=20      #验证集准确率不提升时最多等待epoch，早停
-batch_size=2048       #批量训练样本数
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")   #使用GPU还是CPU进行训练
+#training parameters
+learning_rate=0.001    #learning rate
+weight_decay=0     #L2 regularization parameter
+epochs=100            #maximum training epochs
+early_stop_cnt=20      #early stopping patience
+batch_size=2048       #batch size
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")   #Use GPU or CPU for training
 num_worker=16
