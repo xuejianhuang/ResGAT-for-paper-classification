@@ -25,8 +25,8 @@ def train(epoch, model, loss_fn, optimizer, train_dataloader,vis):
     train_total_loss = 0  # 使用CrossEntropyLoss(reduction='sum')
     train_total_correct = 0
     train_total_num = 0
-    for step, (x,label) in enumerate (train_dataloader):  # input_nodes:参与计算的所有节点id,seeds:输出节点id
-        global total_step  # 使用全局的total_step
+    for step, (x,label) in enumerate (train_dataloader):  # input_nodes:all node ids participating in the calculation,seeds:output node id
+        global total_step  # Use the global total_step
         total_step += 1
         x, label = x.to (config.device), label.to (config.device)
         out = model (x)
@@ -50,7 +50,7 @@ def train(epoch, model, loss_fn, optimizer, train_dataloader,vis):
 
     print ('In epoch:{:03d}, train_loss:{:4f}, train_acc:{:.4f}'.format (epoch, mean_train_loss, mean__train_acc))
 
-    # 动态可视化训练过程中loss和accuracy的变化
+    # Visualize changes in loss and accuracy
     vis.append ([mean_train_loss], [epoch], name='train_loss', win='base_loss')
     vis.append ([mean__train_acc], [epoch], name='train_acc', win='base_acc')
     return mean_train_loss, mean__train_acc
@@ -74,7 +74,7 @@ def test(epoch, model, loss_fn, test_dataloader,vis):
             mean_test_loss = test_total_loss / test_total_num
             mean_test_acc = test_total_correct / test_total_num
             print ('In epoch:{:03d}, test_loss:{:4f},test_acc:{:.4f}'.format (epoch, mean_test_loss, mean_test_acc))
-            # 动态可视化训练过程中loss和accuracy的变化
+            # Visualize changes in loss and accuracy
             vis.append ([mean_test_loss], [epoch], name='test_loss', win='base_loss')
             vis.append ([mean_test_acc], [epoch], name='test_acc', win='base_acc')
             return mean_test_loss, mean_test_acc
@@ -88,7 +88,7 @@ def main(model):
     train_dataloader = DataLoader(train_db, batch_size=config.batch_size, shuffle=True, num_workers=config.num_worker)
     test_dataloader = DataLoader(test_db, batch_size=config.batch_size, shuffle=False, num_workers=config.num_worker)
     model.to(config.device)
-    # 计算模型参数量
+    # Calculate the amount of model parameters
     count_parameters = sum (p.numel () for p in model.parameters () if p.requires_grad)
     print (f"The model has {count_parameters:,} trainable parameters")
 
