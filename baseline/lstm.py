@@ -24,6 +24,7 @@ class LSTM(nn.Module):
         else:
             self.full_conn=nn.Linear(self.hidden_size, self.output_size)
            
+        
     def forward(self,x):
         x=self.norm(x)
         x=x.unsqueeze(2) #4096*300->4096*300*1  N*L*H
