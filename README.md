@@ -1,42 +1,42 @@
 # 基于图神经网络的学术文献自动分类
-   随着自然语言处理技术的发展，学者们提出了各种基于文本分类的学术论文分类方法。在早期研究中，主要基于特征工程，从论文内容、题目、摘要、关键字等提取论文的表示特征，然后基于朴素贝叶斯（NB）、最近邻算法（KNN）、支持向量机（SVM）等传统机器学习算法构建分类模型。近年来，随着深度学习技术的日益成熟，基于CNN、LSTM、Transformer等模型的文本分类成为研究热点。虽然，基于文本分类的学术论文分类研究取得了不少进展，但该分类方法仅考虑了论文标题、摘要、关键字等自身特征，没有融合参考文献和引证文献的特征，导致分类准确率不佳。所以，本实验通过引用关系构建论文关系图数据，提出基于图神经网络（GNN）的学术论文自动分类模型，提高学术论文自动分类的准确率。
-  * 开发语言：python、pytorch、sklearn
-# 数据集说明
-  本文实验使用的数据是基于微软学术文献生成的论文关系图，其中的节点是论文，边是论文间的引用关系。原始数据集包含3063061篇论文，29168650条边，共23个类别。
-  数据集下载地址链接：https://pan.baidu.com/s/1G7CtmsZ-thsMW2zjVhH2IQ  提取码：isc3 
-
-# 实验模型
-### 图神经网络模型
+  With the development of natural language processing techniques, scholars have proposed various academic paper classification methods based on text analysis. In early research, the focus was mainly on feature engineering, where representation features of papers were extracted from their content, titles, abstracts, keywords, etc. These features were then used to build classification models using traditional machine learning algorithms such as Naive Bayes (NB), k-Nearest Neighbors (KNN), Support Vector Machines (SVM), and others. In recent years, with the advancement of deep learning techniques, text classification based on models like Convolutional Neural Networks (CNN), Long Short-Term Memory (LSTM), Transformer, etc., has become a hot research topic. Although significant progress has been made in academic paper classification based on text analysis, this approach only considers the intrinsic features of papers such as titles, abstracts, and keywords, without incorporating the features of reference papers and citations. As a result, the accuracy of classification is not satisfactory. Therefore, in this experiment, we construct a paper relationship graph based on citation relationships and propose an automatic academic paper classification model using Graph Neural Networks (GNN) to improve the accuracy of automatic paper classification.
+  * Programming language：python、pytorch、sklearn
+# Dataset Description
+  The data used in this experiment is a paper relationship graph generated based on Microsoft Academic Literature. In this graph, the nodes represent individual papers, and the edges represent citation relationships between the papers. The original dataset consists of 3,063,061 papers and 29,168,650 edges, covering a total of 23 categories.
+You can download the dataset from the following link: https://pan.baidu.com/s/1G7CtmsZ-thsMW2zjVhH2IQ
+Extraction code: isc3
+# Experiment model
+### Traditional graph neural network model
    * GCN
    * GraphSAGE
    * GAT 
-### 传统文本分类模型
-   * 朴素贝叶斯
-   * 最近邻算法
-   * 支持向量机
+### Traditional Text Classification Model
+   * Naive Bayes
+   * KNN
+   * SVM
    * LSTM
    * Transformer
-# 文件目录说明
-  * baseline:传统文本分类模型目录
-      - results：baseline模型实验结果目录
-      - baseline_config.py：baseline配置文件
-      - DataSampler.py：数据采样类
-      - DNN.py：朴素贝叶斯模型
-      - KNN.py:最近邻模型
-      - SVM.py：支持向量机模型
-      - LSTM.py：LSTM模型
-      - Transformer.py:Transformer模型
-  * checkpoint:检查点保存目录，为了实现训练过程中突然中断的恢复
-  * pre_data:数据预处理和统计分析代码
-  * results:GNN模型实验结果保存目录
-  * confusin.py:可视化混合矩阵
-  * GAT.py:GAT及其改进模型实现类，通过参数可以配置多头注意力个数和残差结构
-  * GCN.py:GCN模型实现类
-  * main.py:项目主文件
-  * SAGE.py：GraphSAGE模型实现类
-  * utils.py:工具包文件
-  * visualize.py:visdom动态结果可视化类
- # 主要第三方包
+# File directory description
+  * baseline:Catalog of traditional text classification models
+      - results：Baseline model experiment results directory
+      - baseline_config.py：baseline configuration file
+      - DataSampler.py：Data Sampling Class
+      - DNN.py：Naive Bayesian model
+      - KNN.py: KNN model
+      - SVM.py：SVM model
+      - LSTM.py：LSTM model
+      - Transformer.py:Transformer model
+  * checkpoint:Checkpoint save directory, in order to realize the recovery of interruption during training
+  * pre_data:Data preprocessing and statistical analysis code
+  * results:GNN model experiment results save directory
+  * confusin.py:Visualize the confusion matrix
+  * ResGAT.py:GAT and its improved model implementation class, the number of multi-head attention and residual structure can be configured through parameters
+  * GCN.py:GCN model implementation class
+  * main.py: main file
+  * SAGE.py：GraphSAGE model implementation class
+  * utils.py:Toolkit class
+  * visualize.py:visdom dynamic result visualization class
+ # Main dependent packages
    * numpy=1.21.4
    * pandas=1.2.0
    * matplotlib=3.3.2
@@ -44,5 +44,5 @@
    * dgl=0.7.2
    * pytorch=1.9.1
    * visdom=0.1.8.9
-# 实验结果
-  基于多头注意力机制和残差连接改进的GAT模型的准确率最高，达到了61%。
+# Experimental results
+  The improved GAT model based on multi-head attention mechanism and residual connection has the highest accuracy rate, reaching 61%.
