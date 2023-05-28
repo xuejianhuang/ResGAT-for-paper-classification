@@ -25,7 +25,6 @@ def nb_model():
     print("准确率是:{}, 消耗时间是:{}s".format(accuracy, int(end - start)))
     return accuracy
 
-
 if __name__ == '__main__':
     nb_model()
 
