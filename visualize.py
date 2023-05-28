@@ -19,5 +19,6 @@ class Visualize():
 
     def append(self,y,x,name,win):
         self.viz.line(y,x,name=name,win=win,update='append')
+       
 
 
