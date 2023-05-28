@@ -2,9 +2,8 @@ import  torch
 import numpy as np
 from torch.utils.data import Dataset
 
-
 class DataSampler(Dataset):
-    data_train_feature_path = '../data/pre/train_nodes_have_label_feature.npy'  #使用训练集中所有有标签的节点
+    data_train_feature_path = '../data/pre/train_nodes_have_label_feature.npy'  #Use all labeled nodes in the training set
     data_train_label_path='../data/pre/train_nodes_have_label_l.npy'
 
     def __init__(self,model):
@@ -12,7 +11,7 @@ class DataSampler(Dataset):
         self.model=model
         self.features=[]
         self.labels=[]
-        ratio=0.05   #训练集95%，测试集5%
+        ratio=0.05   #95% training set, 5% test set
 
         features=np.load(DataSampler.data_train_feature_path)
         data_train_feaure=torch.from_numpy(features).float()
