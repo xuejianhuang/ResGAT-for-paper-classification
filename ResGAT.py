@@ -11,21 +11,21 @@ class ResGATModel(nn.Module):
                  dnn_unit_dropout,save_path=config.gat_model_path,loss_path=config.gat_loss_path,acc_path=config.gat_acc_path,
                  confusion_path=config.gat_confusion_path ,residual=True, activation=F.relu):
         '''
-        :param in_feats: 输入特征维度
-        :param hidden_dim: GAT隐含层维度
-        :param n_layers:采用层数
-        :param fanouts 每层最大采样邻居数量
-        :param n_classes:分类类别数 
-        :param num_heads:注意力个数
-        :param feat_dropout:特征dropout比例
-        :param attn_dropout:attention dropout比例
-        :param dnn_unit_dropout:DNN dropout比例
-        :param save_path 模型保存路径
-        :param loss_path 训练loss保存路径
-        :param acc_path 训练acc保存路径
-        :param confusion_path 混合矩阵保存路径
-        :param residual:是否使用残差网络结构,defaut=True
-        :param activation:激活函数 default=relu
+        :param in_feats: input feature dimension
+        :param hidden_dim: hidden layer dimension
+        :param n_layers:Sampling layers
+        :param fanouts: the maximum number of sampled neighbor nodes per layer
+        :param n_classes:number of categories
+        :param num_heads:the number of multi-headed attention
+        :param feat_dropout:feature dropout rate
+        :param attn_dropout:attention dropout rate
+        :param dnn_unit_dropout:DNN dropout rate
+        :param save_path: model storage path
+        :param loss_path: training loss save path
+        :param acc_path: training accuracy save path
+        :param confusion_path: confusion matrix save path
+        :param residual:Whether to use the residual network structure,defaut=True
+        :param activation:activation function, default=relu
         '''
         super(ResGATModel, self).__init__()
         self.in_feats = in_feats
