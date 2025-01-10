@@ -48,6 +48,7 @@ Extraction code: isc3
   The improved GAT model based on multi-head attention mechanism and residual connection has the highest accuracy rate, reaching 61%.
 
 # Citation
+If you find this project helps your research, please kindly consider citing our paper in your publications.
 ```
 @article{huang2024resgat,
   title={ResGAT: an improved graph neural network based on multi-head attention mechanism and residual network for paper classification},
